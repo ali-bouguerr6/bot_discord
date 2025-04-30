@@ -1,6 +1,11 @@
-import difflib
 import requests
+import difflib
 from urllib.parse import urlencode
+
+
+
+
+
 
 def get_token():
 
@@ -8,8 +13,10 @@ def get_token():
    url = "https://entreprise.pole-emploi.fr/connexion/oauth2/access_token?realm=/partenaire"
    payload = {
        "grant_type": "client_credentials",
-       "client_id": "PAR_recuperateuroffressel_201263b93beec49e65d91dd35e577cc10da48c610f24e5185947ec13702f76fd",## RENTRER LE CLIENT ID DANS LES GUILLEMETS
-       "client_secret": "1200839c51315a11b6619dcbab857711dc67f6591696feddc6169c191590f158", ## RENTRER LE CODE SECRET ENTRE LES GUILLEMETS
+       "client_id": "PAR_stagefinder2025_6ebc9f03f0ee4ba88e0957d99ccf70b9eb8343aa0c9d1db56808dd8a45fd58e3",
+
+
+       "client_secret": "8de54f2cd2df14f0726e3c27e38af4d3d949fbef335a3591ecf896e4556dc941",
        "scope": "api_offresdemploiv2 o2dsoffre"
    }
    headers = {
@@ -39,6 +46,7 @@ def get_communes(token):
 
 def find_commune_code(input_name, communes):
    input_cleaned = input_name.upper().replace("-", " ").strip()
+  
    noms_communes = [commune["libelle"] for commune in communes]
    best_match = difflib.get_close_matches(input_cleaned, noms_communes, n=1, cutoff=0.6)
    print(best_match)
@@ -64,12 +72,14 @@ def find_commune_code(input_name, communes):
 
 
 def determine_zone_recherche(ville_input, communes):
+
+
    villes_specifiques = {
        "PARIS": "75",
        "LYON": "69"
    }
    ville_upper = ville_input.upper().strip()
-
+  
    if ville_upper in villes_specifiques:
        return {
            "type": "departement",
@@ -93,8 +103,8 @@ def search_offres(token, zone_type, zone_code, mots_cles):
    url = "https://api.francetravail.io/partenaire/offresdemploi/v2/offres/search"
    params = {
        "motsCles": mots_cles,
-       "distance": "30",
-       "sort": "0",
+       "distance": "40", 
+       "sort": "0", 
        "offresPartenaires": "true"
    }
 
@@ -120,21 +130,39 @@ def search_offres(token, zone_type, zone_code, mots_cles):
 
 
 
-
-
 def recherche_offres(token, communes, ville_input, mots_cles):
-
-
    zone = determine_zone_recherche(ville_input, communes)
-   if zone:
-       print(f"Recherche à proximité de : {zone['nom_corrige']}")
-       offres = search_offres(token, zone["type"], zone["valeur"], mots_cles)
-       print(f"{offres['resultats'][0] if offres['resultats'] else 'Aucune offre trouvée.'}")
-       print(f"Nombre total d'offres : {len(offres['resultats'])}")
-   else:
-       print("Commune introuvable. Vérifiez l'orthographe.")
+   if not zone:
+       return {"erreur": "Commune introuvable. Vérifiez l'orthographe."}
 
 
+   offres = search_offres(token, zone["type"], zone["valeur"], mots_cles)
+   resultats_utiles = []
+
+
+   for offre in offres.get("resultats", []):
+       resultat = {
+           "titre": offre.get("intitule", "Titre non renseigné"),
+           "entreprise": offre.get("entreprise", {}).get("nom", "Entreprise non précisée"),
+           "lieu": offre.get("lieuTravail", {}).get("libelle", "Lieu non précisé"),
+           "date": offre.get("dateCreation", "Date non renseignée"),
+           "contrat": offre.get("typeContratLibelle", "Non précisé"),
+           "salaire": offre.get("salaire", {}).get("libelle", "Non précisé"),
+           "dureeTravail": offre.get("dureeTravailLibelle", "Non précisé"),
+           "description": offre.get("description", "Aucune description disponible."),
+           "competences": [comp.get("libelle", "") for comp in offre.get("competences", [])],
+           "lien": offre.get("origineOffre", {}).get("urlOrigine", "Lien indisponible")
+       }
+       resultats_utiles.append(resultat)
+
+
+   return {
+       "ville": zone["nom_corrige"],
+       "zone_type": zone["type"],
+       "zone_valeur": zone["valeur"],
+       "nombre_offres": len(resultats_utiles),
+       "offres": resultats_utiles
+   }
 
 
 
@@ -149,4 +177,8 @@ ville = input("Entrez le nom de la ville : ")
 mots_cles = input("Entrez les mots-clés de l'offre : ")
 
 
-recherche_offres(token, communes, ville, mots_cles)
+print(recherche_offres(token, communes, ville, mots_cles))
+
+
+
+
