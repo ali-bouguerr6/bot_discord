@@ -51,7 +51,7 @@ Utilisation :
 
 Attachez un fichier .pdf contenant un CV à un message
 
-[Cv fictif d'exemple si nécessaire ](CV_Fictif.pdf))
+[Cv fictif d'exemple si nécessaire ](CV_Fictif.pdf)
 
 Tapez la commande : !parse_cv
 
