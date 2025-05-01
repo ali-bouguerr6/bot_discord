@@ -41,24 +41,30 @@ L’utilisation de LLMs permet une extraction plus intelligente, plus résistant
 pip install discord requests PyPDF2 google-generativeai
 ```
 
-## 🧪 Exemple de JSON généré
-```
-Voir l'exemple déposer dans le dossier "Groupe 4"
-```
+## 🧪 Exemple d'utilisation
+
+Nous avons créé un CV fictif spécialement pour ce projet, disponible ici :  
+📄 [CV Fictif](CV_Fictif.pdf)
+
+Si l'on attache ce fichier `.pdf` à un message sur Discord en utilisant la commande : `!parse_cv`, le bot analysera le document et renverra un fichier `.json` contenant les données extraites.
+
+Voici un exemple de résultat pouvant être obtenu avec notre programme :  
+🧾📄 [Résultat_JSON](CV_Fictif.JSON)
+
 ## 💬 Commande Discord
 
-Utilisation :
+**Utilisation :**
 
-Attachez un fichier .pdf contenant un CV à un message
-
-[Cv fictif d'exemple si nécessaire](CV_Fictif.pdf)
-
-Tapez la commande : !parse_cv
-
-Le bot vous renverra un fichier .json contenant les données extraites.
+Attachez un fichier `.pdf` contenant un CV à un message faisant appel à la commande : `!parse_cv`  
+Le bot vous renverra un fichier `.json` contenant les données extraites.
 
 ##  👥 Contributeurs
 
-Projet développé par le Groupe 4 du Master 1 - DS2E
-Merci à tous les testeurs et reviewers ✨
+Projet développé par le **Groupe 4** du **Master 1 DS2E**, composé de :
 
+- Erleta Mziu  
+- Noah Herwede  
+- Marie Pierron  
+- Quentin Bacher  
+- Arnaud Kindbeiter  
+- Laïfa Ahmed-Yahia
