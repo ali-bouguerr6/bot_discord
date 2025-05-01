@@ -59,6 +59,6 @@ Le bot vous renverra un fichier .json contenant les données extraites.
 
 ##  👥 Contributeurs
 
-Projet développé par le Groupe 4 du Master 1 DS2E
+Projet développé par le Groupe 4 du Master 1 - DS2E
 Merci à tous les testeurs et reviewers ✨
 
