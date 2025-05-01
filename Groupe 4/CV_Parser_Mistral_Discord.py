@@ -5,23 +5,17 @@
 
 Description:
 -----------
-Ce programme permet d'extraire les informations d'un CV au format PDF et de
-les convertir en format JSON structuré. Il utilise l'API Mistral AI pour 
-analyser le texte et générer automatiquement un JSON bien structuré.
+Ce programme permet d'extraire automatiquement les informations d'un CV au format PDF et de les convertir en JSON structuré. Il utilise l’API Mistral AI pour analyser le texte du CV et générer un résultat cohérent et exploitable.
+
+Le système est intégré à un bot Discord, qui offre une interface utilisateur simplifiée via la commande `!parse_cv`. Lorsqu’un utilisateur envoie un CV en pièce jointe à cette commande, le bot télécharge le fichier, en extrait le texte, l’analyse via l’API Mistral, et retourne un fichier JSON contenant les données extraites.
+
+Cette solution facilite l'analyse de CV directement depuis Discord, sans nécessiter d’intervention manuelle ni d’interface utilisateur graphique.
 
 Note sur le développement:
 ------------------------
-J'ai d'abord essayé de développer plusieurs versions de ce programme en utilisant
-des expressions régulières pour extraire les informations clés des CV. Cette 
-approche s'est révélée très problématique car le code devenait rapidement 
-inutilisable dès que je testais avec un CV ayant une mise en page différente ou 
-une structure légèrement modifiée. Les expressions régulières ne parvenaient 
-plus à détecter correctement les informations.
+Plusieurs versions préliminaires du programme ont été développées à l’aide d’expressions régulières pour extraire les informations clés. Cette méthode a rapidement montré ses limites : le code devenait inutilisable dès qu’un CV présentait une mise en page ou une structure différente.
 
-J'ai finalement opté pour l'utilisation de l'intelligence artificielle (Mistral AI)
-qui offre une solution beaucoup plus robuste, capable de s'adapter à n'importe 
-quel format ou structure de CV. Cette approche permet un traitement plus flexible
-et une meilleure extraction des données pertinentes.
+L'approche retenue repose finalement sur l'intelligence artificielle (Mistral AI), qui permet une extraction beaucoup plus flexible et robuste, quels que soient le format ou la présentation du CV.
 
 Packages requis:
 --------------
@@ -30,18 +24,19 @@ Packages requis:
 - pathlib: pour gérer les chemins de fichiers
 - PyPDF2: pour extraire le texte des fichiers PDF
 - re: pour les expressions régulières
+- discord.py: pour la création du bot Discord
 
 Installation des dépendances:
 ---------------------------
-pip install requests PyPDF2
+pip install requests PyPDF2 discord.py
 
 Configuration requise:
 -------------------
 1. Créer un compte sur https://console.mistral.ai/
 2. Générer une clé API dans votre compte Mistral
-3. Remplacer la valeur de MISTRAL_API_KEY ci-dessous par votre clé API
-4. Spécifier le chemin vers votre fichier PDF d'entrée
-   (le JSON sera automatiquement enregistré au même endroit)
+3. Remplacer la valeur de MISTRAL_API_KEY dans le code par votre clé API
+4. Spécifier le token Discord dans BOT_TOKEN
+5. Lancer le bot et utiliser la commande !parse_cv avec un fichier PDF attaché
 
 Structure du JSON:
 ----------------
@@ -61,8 +56,7 @@ Le JSON généré contient les sections suivantes:
 
 Validation:
 ---------
-Ce programme a été testé avec succès sur 3 CV différents avec des mises en
-page variées. Il s'adapte bien à différents formats et structures de CV.
+Le bot et son système d’analyse ont été testés avec succès sur plusieurs CV aux mises en page variées. Le programme s’adapte efficacement à différents formats et structures.
 =============================================================================
 """
 
