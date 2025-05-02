@@ -3,7 +3,7 @@
 ![Platform](https://img.shields.io/badge/Platform-Discord-blue)
 ![UNISTRA DS2E](https://img.shields.io/badge/UNISTRA-M1_DS2E-blue)
 
-# 📄 CV Parser – Groupe 4 (Discord + LLM) ![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue)
+# 📄 CV Parser – Groupe 4 (Discord + LLM)
 Ce projet Discord permet d’extraire automatiquement les informations d’un CV PDF et de les convertir en JSON structuré. Deux versions sont proposées : une avec **Mistral AI**, l’autre avec **Gemini (Google)**. Les deux ont été testées et donnent des résultats cohérents. Le bot est conçu pour être utilisé directement sur un serveur Discord avec la commande `!parse_cv`.
 
 ## 🔍 Objectif
