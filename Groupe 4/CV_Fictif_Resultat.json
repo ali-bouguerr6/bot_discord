@@ -1,0 +1,99 @@
+{
+  "nom": "Eleonore VERNE",
+  "contact": {
+    "email": "eleonore.verne@marine-analytics.com",
+    "telephone": "+377 98 76 54 32",
+    "linkedin": "eleonore-verne",
+    "github": "eleonoreverne"
+  },
+  "a_propos": {
+    "langues": {
+      "francais": "Natif",
+      "anglais": "C1",
+      "espagnol": "B2",
+      "japonais": "B1"
+    },
+    "soft_skills": [
+      "Leadership",
+      "Innovation",
+      "Résolution de problèmes",
+      "Communication"
+    ],
+    "competences_informatiques": [
+      "Python",
+      "R",
+      "Tableau",
+      "SQL",
+      "MATLAB",
+      "Azure"
+    ],
+    "certifications": [
+      "Yacht Master",
+      "Data Science Professional (DSP-M278X93)"
+    ]
+  },
+  "formation": [
+    {
+      "institution": "Sciences Po Paris",
+      "diplome": "Master Intelligence Artificielle et Politiques Publiques",
+      "periode": "Sept. 2023 – Juin 2025",
+      "enseignements": [
+        "Deep Learning",
+        "Gouvernance des données",
+        "Éthique de l’IA",
+        "Politiques environnementales",
+        "Modélisation prédictive"
+      ]
+    },
+    {
+      "institution": "Université Côte d’Azur",
+      "diplome": "Licence Mathématiques Appliquées et Sciences Sociales",
+      "periode": "Sept. 2020 – Juin 2023",
+      "enseignements": [
+        "Statistiques avancées",
+        "Économétrie",
+        "Analyse de données",
+        "Optimisation",
+        "Simulation stochastique",
+        "Modélisation"
+      ],
+      "mention": "Très Bien"
+    },
+    {
+      "institution": "Lycée Albert Premier",
+      "diplome": "Baccalauréat Scientifique International",
+      "periode": "Sept. 2017 – Juillet 2020",
+      "specialite": "Mathématiques",
+      "option": "Section Européenne Anglais",
+      "mention": "Très Bien avec Félicitations du Jury"
+    }
+  ],
+  "experiences_professionnelles": [
+    {
+      "poste": "Data Scientist Junior",
+      "entreprise": "Marine Analytics Monaco",
+      "lieu": "Monaco",
+      "periode": "Juin 2022 – Déc. 2022",
+      "responsabilites": [
+        "Conception et implémentation d’algorithmes d’analyse prédictive pour optimiser les trajets maritimes et réduire l’empreinte carbone des navires de luxe.",
+        "Développement d’un tableau de bord interactif permettant le suivi en temps réel des performances et des économies de carburant."
+      ]
+    },
+    {
+      "poste": "Stage en Data Analytics",
+      "entreprise": "Azur Innovations",
+      "lieu": "Nice, France",
+      "periode": "Mai 2021 – Août 2021",
+      "responsabilites": [
+        "Analyse des données touristiques de la Côte d’Azur pour identifier les tendances saisonnières et développer un modèle de prévision de l’affluence.",
+        "Création de visualisations interactives et participation à l’élaboration d’une stratégie de tourisme durable pour les municipalités partenaires."
+      ]
+    }
+  ],
+  "projets": [
+    {
+      "nom": "Classification des Sons Marins",
+      "description": "Développement d’un algorithme de machine learning pour identifier et classifier les sons marins (baleines, bateaux, activités humaines) afin de mesurer l’impact de la pollution sonore sur la faune marine méditerranéenne."
+    }
+  ]
+}
