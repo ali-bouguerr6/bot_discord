@@ -114,8 +114,8 @@ def main():
     # Define search parameters
     search_params = {
         'site_names': ["indeed", "linkedin"],
-        'search_term': "data analyst",
-        'google_search_term': "data analyst",
+        'search_term': '"alternance" AND ("data scientist" OR "data science" OR "data analyst" OR "data analyse" OR "quantitative" OR "statisticien")',
+        'google_search_term': '"alternance" AND ("data scientist" OR "data science" OR "data analyst" OR "data analyse" OR "quantitative" OR "statisticien")',
         'location': "France",
         'results_wanted': 200,
         'hours_old': 72,
