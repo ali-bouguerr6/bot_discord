@@ -271,6 +271,17 @@ def main():
         save_jobs_to_csv(cleaned_jobs, csv_filename)
         save_jobs_to_json(cleaned_jobs, json_filename)
 
+     # Display sample data
+        logging.info("\nSample Cleaned Job Data:")
+        pd.set_option('display.max_columns', None)
+        pd.set_option('display.width', 1000)
+        logging.info(cleaned_jobs.head(5).to_string())
+
+        print(f"\nJob scraping completed successfully!")
+        print(f"- Total jobs scraped: {analysis_results['total_jobs']}")
+        print(f"- Data saved to: {csv_filename} and {json_filename}")
+        print(f"- See job_scraper.log for detailed information")
+        
     except Exception as e:
         logging.error(f"Script failed: {str(e)}")
         return 1
