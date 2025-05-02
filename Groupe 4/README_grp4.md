@@ -49,7 +49,7 @@ Nous avons créé un CV fictif spécialement pour ce projet, disponible ici :
 Si l'on attache ce fichier `.pdf` à un message sur Discord en utilisant la commande : `!parse_cv`, le bot analysera le document et renverra un fichier `.json` contenant les données extraites.
 
 Voici un exemple de résultat pouvant être obtenu avec notre programme :  
-🧾📄 [Résultat_JSON](CV_Fictif.JSON)
+🧾📄 [CV Fictif Résultat](CV_Fictif_Resultat.json)
 
 ## 💬 Commande Discord
 
