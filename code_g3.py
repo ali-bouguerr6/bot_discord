@@ -258,7 +258,19 @@ def main():
         # Step 3: Perform basic analysis
         analysis_results = analyze_job_data(cleaned_jobs)
 
+        # Log analysis results
+        logging.info("\nJob Data Analysis Results:")
+        for key, value in analysis_results.items():
+            logging.info(f"{key.replace('_', ' ').title()}: {value}")
+
+        # Step 4: Save results to CSV and JSON
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        csv_filename = f"jobs_{timestamp}.csv"
+        json_filename = f"jobs_{timestamp}.json"
         
+        save_jobs_to_csv(cleaned_jobs, csv_filename)
+        save_jobs_to_json(cleaned_jobs, json_filename)
+
     except Exception as e:
         logging.error(f"Script failed: {str(e)}")
         return 1
