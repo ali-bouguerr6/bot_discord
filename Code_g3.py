@@ -1,3 +1,7 @@
+#Message pour les autres groupes : Pour utiliser le code, vous devez installer dans votre console : 
+#' !pip install python-jobspy ' (sans cette installation, le code ne fonctionnera pas)
+# ensuite vous pouvez lancer le code : python votre_nom_de_fichier.py (ex: python scrap.py)
+
 import csv
 import json
 import logging
