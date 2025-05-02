@@ -37,7 +37,7 @@ def clean_text_field(text):
     """Basic text cleaning for all string fields"""
     if not isinstance(text, str) or pd.isna(text):
         return ""
-    # Replace newlines
+    # Remove extra spaces
     return re.sub(r'\s+', ' ', ''.join(c for c in ' '.join(text.splitlines()) if c.isprintable())).strip()
 
 def clean_job_data(jobs_df):
@@ -50,13 +50,13 @@ def clean_job_data(jobs_df):
         df.drop_duplicates(subset=['job_url'], keep='first', inplace=True)
         logging.info(f"Removed {initial_count - len(df)} duplicate jobs")
         
-        # Clean columns
+        # Select and clean columns
         columns_to_keep = ['job_id', 'title', 'company', 'location', 'job_type', 
                           'date_posted', 'job_url', 'description', 'salary', 'job_site']
         columns_to_keep = [col for col in columns_to_keep if col in df.columns]
         df = df[columns_to_keep]
         
-        # Clean text fields
+        # Clean text 
         for col in ['title', 'company', 'location', 'description', 'salary']:
             if col in df.columns:
                 df[col] = df[col].apply(clean_text_field)
@@ -65,7 +65,7 @@ def clean_job_data(jobs_df):
         if 'date_posted' in df.columns:
             df['date_posted'] = pd.to_datetime(df['date_posted'], errors='coerce')
         
-        # Standardize job types
+        # Job types
         if 'job_type' in df.columns:
             job_type_map = {
                 'full': 'Full-time', 'temps plein': 'Full-time', 'cdi': 'Full-time',
@@ -80,7 +80,7 @@ def clean_job_data(jobs_df):
                 x.capitalize() if isinstance(x, str) else x
             ))
         
-        # Clean location
+        # Clean location data
         if 'location' in df.columns:
             df['location'] = df['location'].apply(
                 lambda x: re.sub(r'\b(Remote|Hybrid|Télétravail|À distance)\b', '', x, 
@@ -108,7 +108,7 @@ def analyze_job_data(jobs_df):
         'total_jobs': len(jobs_df)
     }
     
-    # Add top values for relevant columns
+    # Add top values 
     for col, count in [('company', 5), ('location', 5), ('job_type', 10)]:
         if col in jobs_df.columns:
             analysis[f'top_{col}s'] = jobs_df[col].value_counts().head(count).to_dict()
@@ -123,12 +123,12 @@ def analyze_job_data(jobs_df):
     return analysis
 
 def save_data(jobs_df, base_filename):
-    """Save job data to both CSV and JSON formats"""
+    """Save job data to CSV, JSON, and Python dictionary formats"""
     try:
         # Copy of the dataframe for export
         export_df = jobs_df.copy()
         
-        # Convert datetime to string 
+        # Convert datetime to string
         if 'date_posted' in export_df.columns and export_df['date_posted'].dtype == 'datetime64[ns]':
             export_df['date_posted'] = export_df['date_posted'].dt.strftime('%Y-%m-%d')
         
@@ -144,11 +144,29 @@ def save_data(jobs_df, base_filename):
         
         # Save JSON
         json_filename = f"{base_filename}.json"
+        jobs_records = export_df.to_dict(orient='records')
         with open(json_filename, 'w', encoding='utf-8') as f:
-            json.dump(export_df.to_dict(orient='records'), f, ensure_ascii=False, indent=2)
+            json.dump(jobs_records, f, ensure_ascii=False, indent=2)
+        
+        # Python dictionary
+        dict_filename = f"{base_filename}_dict.py"
+        with open(dict_filename, 'w', encoding='utf-8') as f:
+            f.write("job_data = [\n")
+            for job in jobs_records:
+                f.write("    {\n")
+                for key, value in job.items():
+                    if isinstance(value, str):
+                        formatted_value = f'"{value}"'
+                    elif value is None:
+                        formatted_value = 'None'
+                    else:
+                        formatted_value = str(value)
+                    f.write(f'        "{key}": {formatted_value},\n')
+                f.write("    },\n")
+            f.write("]\n")
             
-        logging.info(f"Successfully saved job data to {csv_filename} and {json_filename}")
-        return csv_filename, json_filename
+        logging.info(f"Successfully saved job data to {csv_filename}, {json_filename}, and {dict_filename}")
+        return csv_filename, json_filename, dict_filename
     except Exception as e:
         logging.error(f"Error saving data: {str(e)}")
         raise
@@ -168,7 +186,6 @@ def main():
     }
 
     try:
-        # Scrape -> clean -> analyze -> save
         jobs = scrape_job_listings(search_params)
         cleaned_jobs = clean_job_data(jobs)
         analysis = analyze_job_data(cleaned_jobs)
@@ -186,7 +203,7 @@ def main():
         # Save results
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         base_filename = f"jobs_{timestamp}"
-        csv_file, json_file = save_data(cleaned_jobs, base_filename)
+        csv_file, json_file, dict_file = save_data(cleaned_jobs, base_filename)
 
         # Data and summary
         logging.info("\nSample Cleaned Job Data:")
@@ -196,7 +213,7 @@ def main():
 
         print(f"\nJob scraping completed successfully!")
         print(f"- Total jobs scraped: {analysis['total_jobs']}")
-        print(f"- Data saved to: {csv_file} and {json_file}")
+        print(f"- Data saved to: {csv_file}, {json_file}, and {dict_file}")
 
     except Exception as e:
         logging.error(f"Script failed: {str(e)}")
