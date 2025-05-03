@@ -81,19 +81,28 @@ def generer_prompt_lettre(cv_dict, offre_dict):
     certifications = ", ".join(cv_dict["certifications"])
 
     return f"""
-Tu es un expert RH. Rédige une lettre de motivation complète et prête à être envoyée, à partir du CV et de l'offre ci-dessous.
+Tu es un expert RH et spécialiste de la rédaction de lettres de motivation professionnelles. Rédige une lettre complète, prête à être envoyée, en t’appuyant sur le CV du candidat et l’offre d’emploi ci-dessous.
 
-✅ La lettre doit :
+🎯 Objectif :
+Fournir une lettre claire, convaincante, personnalisée, sans faute ni besoin de correction, dans un style fluide, professionnel et humain.
+
+✅ La lettre doit impérativement :
+- Tenir sur une page (Word A4) avec un style direct et efficace.
 - Suivre ce plan structuré :
-    1. Présentation du candidat
-    2. Motivation pour le poste
-    3. Référence à l’entreprise et à l’offre
-    4. Mise en avant des compétences, expériences et cours suivis en lien avec le poste
-    5. Remerciements et formule de politesse
-- Être parfaitement rédigée, sans fautes d’orthographe ni erreurs grammaticales.
-- Commencer chaque phrase par une majuscule.
-- Ne nécessiter aucune modification manuelle après génération.
-- Utiliser un ton professionnel, naturel, adapté à une candidature en entreprise.
+    1. Présentation brève du candidat et de son parcours
+    2. Motivation sincère et cohérente pour le poste
+    3. Mise en lien entre l’entreprise/l’offre et les valeurs du candidat
+    4. Mise en avant ciblée des compétences, expériences ou cours suivis correspondant aux missions
+    5. Remerciements, disponibilité pour un entretien, et formule de politesse
+
+✍️ Style :
+- Zéro faute d’orthographe ou de grammaire.
+- Chaque phrase commence par une majuscule.
+- Aucune formule générique ni tournure artificielle.
+- Le ton doit être confiant, positif, professionnel et chaleureux.
+- Ne propose aucun espace à compléter : tout doit être finalisé.
+
+📎 Contexte fourni :
 
 --- CV ---
 Nom : {cv_dict['prenom_nom']}
@@ -109,7 +118,7 @@ Expériences :
 {experiences}
 
 Compétences techniques : {competences}
-Soft skills : {soft_skills}
+Compétences comportementales (soft skills) : {soft_skills}
 Langues : {langues}
 Certifications : {certifications}
 
@@ -117,10 +126,15 @@ Certifications : {certifications}
 Titre : {offre_dict['titre']}
 Entreprise : {offre_dict['entreprise']}
 Lieu : {offre_dict['lieu']}
-Contrat : {offre_dict['type_contrat']}
-Description : {offre_dict['description_entreprise']}
-Missions : {offre_dict['missions']}
-Profil recherché : {offre_dict['profil_recherche']}
+Type de contrat : {offre_dict['type_contrat']}
+À propos de l’entreprise :
+{offre_dict['description_entreprise']}
+
+Missions proposées :
+{offre_dict['missions']}
+
+Profil recherché :
+{offre_dict['profil_recherche']}
 """
 
 # --- 2. Offre d'alternance exemple ---
