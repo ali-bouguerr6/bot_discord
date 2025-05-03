@@ -1,62 +1,44 @@
 import discord
+from discord import app_commands
 from discord.ext import commands
 import os
 from dotenv import load_dotenv
+import asyncio
 
-# Charger le token depuis le fichier .env
 load_dotenv()
-TOKEN = os.getenv("DISCORD_TOKEN")
-print(f"TOKEN récupéré : {TOKEN}")
 
+# Importation des modules personnalisés
+from commands.scrape_jobs import setup_scrape_command
+from commands.extract_cv import setup_cv_command
+from commands.match_cv_offer import setup_compare_command
+from commands.generate_cover_letter import setup_letter_command
+from utils.helper import UserData, user_data
+
+# Configuration du bot
 intents = discord.Intents.default()
 intents.message_content = True
-
-bot = commands.Bot(command_prefix="!", intents=intents)
+bot = commands.Bot(command_prefix='!', intents=intents)
 
 @bot.event
 async def on_ready():
-    print(f"✅ Bot connecté en tant que {bot.user} !")
+    print(f'Bot connecté en tant que {bot.user}')
+    try:
+        synced = await bot.tree.sync()
+        print(f"Commandes synchronisées: {len(synced)}")
+    except Exception as e:
+        print(f"Erreur lors de la synchronisation des commandes: {e}")
 
-@bot.command(name="search_job")
-async def search_job(ctx):
-    await ctx.send("🔍 Recherche d'emploi en cours...")
+# Configuration des commandes
+def setup(bot):
+    setup_scrape_command(bot)
+    setup_cv_command(bot)
+    setup_compare_command(bot)
+    setup_letter_command(bot)
 
-    # Simulation de chaque groupe
-    fake_cv = "Texte extrait du CV."
-    fake_offre = {"titre": "Data Analyst", "description": "CDI - Paris", "url": "https://example.com"}
-    pertinence = 8.5
-    lettre = "Madame, Monsieur, je suis intéressé..."
+# Initialiser les commandes
+setup(bot)
 
-    # Réponse utilisateur
-    await ctx.send(f"**Offre :** {fake_offre['titre']} - {fake_offre['description']}")
-    await ctx.send(f"📎 Lien : {fake_offre['url']}")
-    await ctx.send(f"📈 Pertinence : {pertinence}/10")
-    await ctx.send(f"📄 Lettre générée :\n```{lettre}```")
+TOKEN = os.getenv("DISCORD_TOKEN")
 
-@bot.command(name='commandes')
-async def help_command(ctx):
-    help_message = """
-    Voici les commandes disponibles :
-    - `!search_job`: Recherche des offres d'emploi et génère une lettre de motivation.
-    - `!status`: Affiche le statut actuel du bot.
-    - `!ping`: Vérifie si le bot répond (retourne "Pong !").
-    """
-    await ctx.send(help_message)
-
-@bot.command(name='ping')
-async def ping(ctx):
-    await ctx.send('Pong !')
-
-@bot.command(name='status')
-async def status(ctx):
-    status_message = f"Je suis {bot.user.name} et je suis présent sur {len(bot.guilds)} serveurs."
-    await ctx.send(status_message)
-
-@bot.command(name='clear')
-async def clear(ctx, amount=5):
-    await ctx.channel.purge(limit=amount)
-    await ctx.send(f"{amount} messages ont été supprimés.")
-
-
-# Lancer le bot
+print(f"Démarrage du bot avec le token: {'*' * len(TOKEN)}")  # Affiche des étoiles au lieu du token pour la sécurité
 bot.run(TOKEN)
