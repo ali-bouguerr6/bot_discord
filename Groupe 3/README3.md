@@ -32,7 +32,7 @@ Mais pour les stages...oui !
 Afin d’augmenter le volume et la diversité des offres d’emploi collectées, il a paru évident d’ouvrir la thématique aux stages. Cela permet d’obtenir plus de résultats, de couvrir un public plus large (étudiants, jeunes diplômés) et d’analyser les tendances du marché sur différents niveaux d’expérience.
 Le mot clé utilisé est "data" et la traduction de "stage" (hors France)
 Auteur: Grégoire Fuchs
----
+
 
 ## 1. Webscraping des stages sur Indeed
 
