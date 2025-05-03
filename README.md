@@ -18,7 +18,7 @@ Placez le fichier .py dans votre répertoire de travail (par exemple, scrap.py),
 
 
 python scrap.py
-## 2.Utilisation
+## 2.Logique algorithmique
 Le script effectuera les actions suivantes :
 
 Scraping des offres d’emploi sur Indeed.fr avec les mots-clés :
