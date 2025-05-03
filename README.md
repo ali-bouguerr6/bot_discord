@@ -2,7 +2,7 @@
 
 Ce script permet de collecter, nettoyer, analyser et sauvegarder des offres d'emploi en alternance dans le domaine de la Data Science (et métiers connexes), publiées sur Indeed France à l’aide de la bibliothèque python-jobspy.
 
-## ✅ Prérequis
+## ✅ I.Prérequis
 
 Avant d'exécuter le script, assurez-vous d'avoir Python installé et d'installer les dépendances nécessaires.
 
@@ -18,7 +18,7 @@ Placez le fichier .py dans votre répertoire de travail (par exemple, scrap.py),
 
 
 python scrap.py
-## 2. ✅ Logique algorithmique
+##  ✅ II.Logique algorithmique
 Le script effectuera les actions suivantes :
 
 1. Scraping des offres d’emploi sur Indeed.fr avec les mots-clés :
