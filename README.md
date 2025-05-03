@@ -1,10 +1,39 @@
-#Partie I : Webscrapping  des offres d'alternance. 
+# Partie I : Webscrapping  des offres d'alternance. 
+
+Ce script permet de collecter, nettoyer, analyser et sauvegarder des offres d'emploi en alternance dans le domaine de la Data Science (et métiers connexes), publiées sur Indeed France à l’aide de la bibliothèque python-jobspy.
+
+✅ Prérequis
+Avant d'exécuter le script, assurez-vous d'avoir Python installé et d'installer les dépendances nécessaires.
+
+1. Installer python-jobspy
+   (! ou % suivant l'environnemnet)pip install python-jobspy
+   Autres dépendances (installées automatiquement avec pip dans un environnement propre)
+pandas ;datetime;logging ;re;json;csv;sys
+
+🚀2.  Lancer le script
+Placez le fichier .py dans votre répertoire de travail (par exemple, scrap.py), puis exécutez :
 
 
+python scrap.py
+Le script effectuera les actions suivantes :
 
+Scraping des offres d’emploi sur Indeed.fr avec les mots-clés :
 
+"alternance" ET ( "data scientist", "data science", "data analyst", "data analyse", "quantitative", "statisticien" )
 
+Nettoyage des données (doublons, formatage, nettoyage texte, etc.)
+Analyse simple (entreprises les plus fréquentes, villes, types de contrat, plage de dates...)
 
+Sauvegarde des résultats aux formats :CSV/JSON/Python (liste de dictionnaires)
+
+🛠️ Fichiers de sortie : 
+
+Fichiers de sortie
+Chaque exécution génère des fichiers avec un horodatage unique dans le nom, par exemple.
+
+🛠️Remarques: attention, on a aussi limité  à différents éléments ! 
+Le script fonctionne uniquement avec des offres récentes (paramétré ici sur les 72 dernières heures).
+La recherche est paramétrée pour la France, mais vous pouvez modifier les mots-clés et la zone géographique directement dans la variable search_params dans la fonction main().
 
 
 
@@ -17,6 +46,7 @@
 ## Introduction
 
 Afin d’augmenter le volume et la diversité des offres d’emploi collectées, il a paru évident d’ouvrir la thématique aux **stages**. Cela permet d’obtenir plus de résultats, de couvrir un public plus large (étudiants, jeunes diplômés) et d’analyser les tendances du marché sur différents niveaux d’expérience.
+A noter le mot clé utilisé ici est "DATA" simplement et "STAGE"
 
 ---
 
