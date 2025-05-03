@@ -16,14 +16,29 @@ pandas ,datetime,logging,re,json;csv,sys
 
 Le script effectuera les actions suivantes :
 
-1.Scraping des offres d’emploi sur Indeed.fr avec les mots-clés :"alternance" ET ( "data scientist", "data science", "data analyst", "data analyse", "quantitative", "statisticien" )
-2.Nettoyage des données (doublons, formatage, nettoyage texte, etc.)
-3.Analyse simple (entreprises les plus fréquentes, villes, types de contrat, plage de dates...)
-4.Sauvegarde des résultats aux formats :
+🔍 Scraping des offres d’emploi sur Indeed.fr avec les mots-clés :
+"alternance" ET ("data scientist", "data science", "data analyst", "data analyse", "quantitative", "statisticien")
 
-##Limites
+🧹Nettoyage des données : suppression des doublons, nettoyage du texte, mise en forme des champs (dates, salaires, type de contrat...).
+
+📊 Analyse simple :
+
+Entreprises les plus présentes
+Localisations les plus fréquentes
+Types de contrat
+Plage de dates de publication
+
+💾 Sauvegarde des résultats aux formats :
+
+.csv
+.json
+
+.py (fichier Python contenant une liste de dictionnaires)
+## Limites
 Les données ne concernent que la France, mais pour les stages nous avons ouvert à l'étranger. En effet, juridiquement, et financièrement, il n'est pas possible de faire co-financer son alternance en dehors de la France ! 
 Mais pour les stages...oui ! 
+
+Nos sources sont donc basés sur le Github de python-job, que nous remercions énormément ! 
 
 # Partie 2 :  Webscrapping des offres de stage
 
