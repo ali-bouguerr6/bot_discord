@@ -53,7 +53,7 @@ A noter le mot clé utilisé ici est "DATA" simplement et "STAGE"
 
 ---
 
-## 1. Webscraping des stages sur Indeed
+## ✅I. Webscraping des stages sur Indeed
 
 La première étape consiste à utiliser le package [`jobspy`](https://github.com/cullenwatson/JobSpy) pour scraper les offres de stage sur Indeed.  
 Le mot-clé utilisé est **"stage"** ou sa traduction selon la langue et le pays ciblé :
@@ -72,7 +72,7 @@ L’objectif est d’obtenir un maximum d’offres pertinentes pour chaque zone 
 
 ---
 
-## 2. Webscraping des stages via Google Jobs
+##✅ 2. Webscraping des stages via Google Jobs
 
 Dans un second temps, le même package `jobspy` est utilisé pour interroger **Google Jobs**.  
 Google Jobs agrège des offres provenant de multiples plateformes, ce qui permet d’optimiser la couverture et la diversité des résultats.
@@ -85,7 +85,7 @@ Cela permet de croiser les résultats d’Indeed avec ceux de Google Jobs, pour 
 
 ---
 
-## 3. Optimisation et perspectives
+##✅ 3. Optimisation et perspectives
 
 - **Optimisation** :  
   Les recherches sont pensées pour maximiser la pertinence (mot-clé adapté, filtrage géographique) et la diversité des sources.
