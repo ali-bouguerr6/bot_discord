@@ -21,13 +21,13 @@ python scrap.py
 ## 2.Logique algorithmique
 Le script effectuera les actions suivantes :
 
-1.Scraping des offres d’emploi sur Indeed.fr avec les mots-clés :
+1. Scraping des offres d’emploi sur Indeed.fr avec les mots-clés :
 
 "alternance" ET ( "data scientist", "data science", "data analyst", "data analyse", "quantitative", "statisticien" )
 
-2.Nettoyage des données (doublons, formatage, nettoyage texte, etc.)
-3.Analyse simple (entreprises les plus fréquentes, villes, types de contrat, plage de dates...)
-4.auvegarde des résultats aux formats :CSV/JSON/Python (liste de dictionnaires)
+2. Nettoyage des données (doublons, formatage, nettoyage texte, etc.)
+3. Analyse simple (entreprises les plus fréquentes, villes, types de contrat, plage de dates...)
+4. Sauvegarde des résultats aux formats :CSV/JSON/Python (liste de dictionnaires)
 
 🛠️ Fichiers de sortie : 
 
