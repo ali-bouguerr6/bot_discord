@@ -1,4 +1,5 @@
 import requests
+from docx import Document
 
 # --- 1. Fonctions pour générer les prompts ---
 
@@ -137,18 +138,91 @@ Profil recherché :
 {offre_dict['profil_recherche']}
 """
 
-# --- 2. Offre d'alternance exemple ---
-offre_emploi = {
-    "titre": "Alternante Data Analyst Junior",
-    "entreprise": "NavOcean",
-    "lieu": "Marseille",
-    "type_contrat": "Alternance (12 mois)",
-    "description_entreprise": "NavOcean développe des solutions IA pour la logistique maritime durable.",
-    "missions": "- Analyse des données environnementales maritimes\n- Création de tableaux de bord avec Tableau/Power BI\n- Contribution aux modèles prédictifs avec Python/R",
-    "profil_recherche": "- Étudiant(e) en Master IA ou Data Science\n- Bon niveau en Python ou R, visualisation et statistiques\n- Sensibilité aux enjeux maritimes ou climatiques"
+# --- 2. CV d'exemple ---
+cv_dict = {
+    "prenom_nom": "Eleonore VERNE",
+    "email": "eleonore.verne@marine-analytics.com",
+    "telephone": "+377 98 76 54 32",
+    "linkedin": "eleonore-verne",
+    "github": "eleonoreverne",
+    "competences_techniques": ["Python", "R", "Tableau", "SQL", "MATLAB", "Azure"],
+    "soft_skills": ["Leadership", "Innovation", "Résolution de problèmes", "Communication"],
+    "langues": ["Français (Natif)", "Anglais (C1)", "Espagnol (B2)", "Japonais (B1)"],
+    "certifications": ["Yacht Master", "Data Science Professional (DSP-M278X93)"],
+    "formation": [
+        {
+            "titre": "Master Intelligence Artificielle et Politiques Publiques",
+            "etablissement": "Sciences Po Paris",
+            "periode": "Sept. 2023 – Juin 2025",
+            "details": [
+                "Principaux enseignements: Deep Learning, Gouvernance des données, Éthique de l’IA, Politiques environnementales, Modélisation prédictive."
+            ]
+        },
+        {
+            "titre": "Licence Mathématiques Appliquées et Sciences Sociales",
+            "etablissement": "Université Côte d’Azur",
+            "periode": "Sept. 2020 – Juin 2023",
+            "details": [
+                "Principaux enseignements: Statistiques avancées, Économétrie, Analyse de données, Optimisation, Simulation stochastique, Modélisation.",
+                "Mention: Très Bien"
+            ]
+        },
+        {
+            "titre": "Baccalauréat Scientifique International",
+            "etablissement": "Lycée Albert Premier",
+            "periode": "Sept. 2017 – Juillet 2020",
+            "details": [
+                "Spécialité: Mathématiques",
+                "Option: Section Européenne Anglais",
+                "Mention: Très Bien avec Félicitations du Jury"
+            ]
+        }
+    ],
+    "experience": [
+        {
+            "titre": "Data Scientist Junior",
+            "entreprise": "Marine Analytics Monaco",
+            "lieu": "Monaco",
+            "periode": "Juin 2022 – Déc. 2022",
+            "details": [
+                "Conception et implémentation d’algorithmes d’analyse prédictive pour optimiser les trajets maritimes et réduire l’empreinte carbone des navires de luxe. Développement d’un tableau de bord interactif permettant le suivi en temps réel des performances et des économies de carburant."
+            ]
+        },
+        {
+            "titre": "Stage en Data Analytics",
+            "entreprise": "Azur Innovations",
+            "lieu": "Nice, France",
+            "periode": "Mai 2021 – Août 2021",
+            "details": [
+                "Analyse des données touristiques de la Côte d’Azur pour identifier les tendances saisonnières et développer un modèle de prévision de l’affluence. Création de visualisations interactives et participation à l’élaboration d’une stratégie de tourisme durable pour les municipalités partenaires."
+            ]
+        }
+    ]
 }
 
-# --- 3. Envoi à l'API Gemini ---
+# --- 3. Offres d'alternance exemple ---
+liste_offres = [
+    {
+        "titre": "Alternante Data Analyst Junior",
+        "entreprise": "NavOcean",
+        "lieu": "Marseille",
+        "type_contrat": "Alternance (12 mois)",
+        "description_entreprise": "NavOcean développe des solutions IA pour la logistique maritime durable.",
+        "missions": "- Analyse des données environnementales maritimes\n- Création de tableaux de bord avec Tableau/Power BI\n- Contribution aux modèles prédictifs avec Python/R",
+        "profil_recherche": "- Étudiant(e) en Master IA ou Data Science\n- Bon niveau en Python ou R, visualisation et statistiques\n- Sensibilité aux enjeux maritimes ou climatiques"
+    },
+    {
+        "titre": "Alternante Data Scientist Climat",
+        "entreprise": "GreenForecast",
+        "lieu": "Lyon",
+        "type_contrat": "Alternance (12 mois)",
+        "description_entreprise": "GreenForecast prédit les impacts climatiques pour les grandes villes européennes.",
+        "missions": "- Traitement de données satellites\n- Modélisation prédictive avec Python\n- Veille scientifique sur l'adaptation climatique",
+        "profil_recherche": "- Solides compétences Python, Machine Learning, climat\n- Sensibilité environnementale"
+    }
+]
+
+# --- 4. Envoi à l'API Gemini ---
 api_key = "Votre clé API"  # Remplace par ta vraie clé
 url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent"
 headers = {"Content-Type": "application/json"}
@@ -172,15 +246,29 @@ def interroger_gemini(prompt):
         print(response.text)
         return None
 
-# --- 4. Traitement ---
-prompt_pertinence = generer_prompt_pertinence(cv_dict, offre_emploi)
-reponse = interroger_gemini(prompt_pertinence)
+# --- 5. Traitement ---
+for offre in liste_offres:
+    print(f"\n🔍 Traitement de l'offre chez {offre['entreprise']}...")
+    prompt_pertinence = generer_prompt_pertinence(cv_dict, offre)
+    reponse = interroger_gemini(prompt_pertinence)
 
-if reponse and reponse.lower() == "oui":
-    print("✅ Profil jugé pertinent, génération de la lettre...\n")
-    prompt_lettre = generer_prompt_lettre(cv_dict, offre_emploi)
-    lettre = interroger_gemini(prompt_lettre)
-    print("\n📝 Lettre de motivation générée :\n")
-    print(lettre)
-else:
-    print("⛔ Le profil n'est pas jugé pertinent à 70 %.")
+    if reponse and reponse.lower() == "oui":
+        print("✅ Profil pertinent. Génération de la lettre...")
+        prompt_lettre = generer_prompt_lettre(cv_dict, offre)
+        lettre = interroger_gemini(prompt_lettre)
+
+        if lettre:
+            doc = Document()
+            doc.add_heading(f"Lettre de motivation – {cv_dict['prenom_nom']}", 0)
+            for ligne in lettre.split('\n'):
+                if ligne.strip():
+                    doc.add_paragraph(ligne)
+
+            nom_fichier = f"Lettre_{cv_dict['prenom_nom'].replace(' ', '_')}_{offre['entreprise'].replace(' ', '_')}.docx"
+            doc.save(nom_fichier)
+            print(f"📄 Lettre sauvegardée dans : {nom_fichier}")
+        else:
+            print("⚠️ Erreur lors de la génération de la lettre.")
+    else:
+        print("⛔ Profil non jugé pertinent.")
+
