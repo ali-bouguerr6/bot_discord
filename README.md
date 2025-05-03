@@ -10,7 +10,9 @@ Avant d'exécuter le script, assurez-vous d'avoir Python installé et d'installe
    Autres dépendances (installées automatiquement avec pip dans un environnement propre)
 pandas ;datetime;logging ;re;json;csv;sys
 
-🚀2.  Lancer le script
+
+
+2.🚀  Lancer le script
 Placez le fichier .py dans votre répertoire de travail (par exemple, scrap.py), puis exécutez :
 
 
