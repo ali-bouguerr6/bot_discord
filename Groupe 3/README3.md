@@ -1,22 +1,36 @@
 # Partie I : Webscrapping  des offres d'alternance. 
 
-g
+## But : 
+Ce script permet de collecter, nettoyer, analyser et sauvegarder des offres d'emploi en alternance dans le domaine de la Data Science (et métiers connexes), publiées sur Indeed France à l’aide de la bibliothèque python-jobspy.
 
+## ✅ Prérequis
+Avant d'exécuter le script, assurez-vous d'avoir Python installé et d'installer les dépendances nécessaires.
 
+1. Installer python-jobspy
+   (%ou ! ) pip install python-jobspy
 
+   2. Autres dépendances (installées automatiquement avec pip dans un environnement propre)
+pandas ,datetime,logging,re,json;csv,sys
 
+## ✅  Exécution du script. 
 
+Le script effectuera les actions suivantes :
 
+1.Scraping des offres d’emploi sur Indeed.fr avec les mots-clés :"alternance" ET ( "data scientist", "data science", "data analyst", "data analyse", "quantitative", "statisticien" )
+2.Nettoyage des données (doublons, formatage, nettoyage texte, etc.)
+3.Analyse simple (entreprises les plus fréquentes, villes, types de contrat, plage de dates...)
+4.Sauvegarde des résultats aux formats :
 
-
-
-
+##Limites
+Les données ne concernent que la France, mais pour les stages nous avons ouvert à l'étranger. En effet, juridiquement, et financièrement, il n'est pas possible de faire co-financer son alternance en dehors de la France ! 
+Mais pour les stages...oui ! 
 
 # Partie 2 :  Webscrapping des offres de stage
 
 ## Introduction
 
 Afin d’augmenter le volume et la diversité des offres d’emploi collectées, il a paru évident d’ouvrir la thématique aux **stages**. Cela permet d’obtenir plus de résultats, de couvrir un public plus large (étudiants, jeunes diplômés) et d’analyser les tendances du marché sur différents niveaux d’expérience.
+Le mot clé utilisé est "data" et la traduction de "stage" (hors France)
 Auteur: Grégoire Fuchs
 ---
 
