@@ -73,13 +73,24 @@ Voici un CV et une offre d'emploi. Réponds uniquement par "oui" si le profil co
 {offre_txt}
 """
 
-def generer_prompt_lettre(cv_dict, offre_dict):
+def generer_prompt_lettre(cv_dict, offre_dict, infos_perso=None):
+    if infos_perso is None:
+        infos_perso = {"motivation": "", "lien_entreprise": "", "contraintes": ""}
+
     formations = formatter_formation(cv_dict["formation"])
     experiences = formatter_experience(cv_dict["experience"])
     competences = ", ".join(cv_dict["competences_techniques"])
     soft_skills = ", ".join(cv_dict["soft_skills"])
     langues = ", ".join(cv_dict["langues"])
     certifications = ", ".join(cv_dict["certifications"])
+
+    perso_txt = ""
+    if infos_perso["motivation"]:
+        perso_txt += f"\nMotivation personnelle : {infos_perso['motivation']}"
+    if infos_perso["lien_entreprise"]:
+        perso_txt += f"\nLien particulier avec l’entreprise ou le secteur : {infos_perso['lien_entreprise']}"
+    if infos_perso["contraintes"]:
+        perso_txt += f"\nInformations supplémentaires : {infos_perso['contraintes']}"
 
     return f"""
 Tu es un expert RH et spécialiste de la rédaction de lettres de motivation professionnelles. Rédige une lettre complète, prête à être envoyée, en t’appuyant sur le CV du candidat et l’offre d’emploi ci-dessous.
@@ -136,6 +147,9 @@ Missions proposées :
 
 Profil recherché :
 {offre_dict['profil_recherche']}
+
+--- Informations complémentaires du candidat ---
+{perso_txt if perso_txt else "Aucune information supplémentaire fournie."}
 """
 
 # --- 2. CV d'exemple ---
@@ -245,8 +259,19 @@ def interroger_gemini(prompt):
         print(f"\n❌ Erreur Gemini : {response.status_code}")
         print(response.text)
         return None
+# --- 5. Interaction utilisateur ---
+def demander_infos_complementaires():
+    print("\n📝 Tu peux maintenant ajouter quelques éléments personnalisés à intégrer dans ta lettre (facultatif).")
+    motivation = input("➡️ Quelle est ta motivation personnelle pour ce poste ? (laisser vide si aucune) : ").strip()
+    lien_entreprise = input("➡️ As-tu un lien particulier avec l’entreprise, le secteur ou la mission ? : ").strip()
+    contraintes = input("➡️ As-tu une contrainte géographique, de rythme ou une précision utile ? : ").strip()
+    return {
+        "motivation": motivation,
+        "lien_entreprise": lien_entreprise,
+        "contraintes": contraintes
+    }
 
-# --- 5. Traitement ---
+# --- 6. Traitement principal ---
 for offre in liste_offres:
     print(f"\n🔍 Traitement de l'offre chez {offre['entreprise']}...")
     prompt_pertinence = generer_prompt_pertinence(cv_dict, offre)
@@ -254,7 +279,8 @@ for offre in liste_offres:
 
     if reponse and reponse.lower() == "oui":
         print("✅ Profil pertinent. Génération de la lettre...")
-        prompt_lettre = generer_prompt_lettre(cv_dict, offre)
+        infos_perso = demander_infos_complementaires()
+        prompt_lettre = generer_prompt_lettre(cv_dict, offre, infos_perso)
         lettre = interroger_gemini(prompt_lettre)
 
         if lettre:
